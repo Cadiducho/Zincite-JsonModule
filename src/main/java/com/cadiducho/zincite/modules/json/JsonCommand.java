@@ -32,7 +32,9 @@ public class JsonCommand implements BotCommand {
 
     @Override
     public String getName() {
-        return aliases.get(0);
+        if (aliases == null) return null; // No aliases registered
+        if (aliases.isEmpty()) return null; // Object created but any registered
+        return aliases.get(0); // ok, return the first param
     }
 
     @Override

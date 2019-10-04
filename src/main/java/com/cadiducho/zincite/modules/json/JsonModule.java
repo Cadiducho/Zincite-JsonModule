@@ -42,6 +42,10 @@ public class JsonModule implements ZinciteModule {
 
     private Map<String, CommandFunctionality> reusableFunctionalities = new HashMap<>();
 
+    private int totalCommands = 0;
+    private int failedFunctionalities = 0;
+    private int failedConmmands = 0;
+
     @Override
     public void onLoad() {
         this.commandManager = ZinciteBot.getInstance().getCommandManager();
@@ -58,19 +62,20 @@ public class JsonModule implements ZinciteModule {
         try {
             Files.newDirectoryStream(funcionalitiesFolder.toPath(),
                     path -> path.toString().endsWith(".json"))
-                    .forEach(this::loadReusableFunctionalities);
+                    .forEach(this::loadReusableFunctionality);
 
             Files.newDirectoryStream(commandsFolder.toPath(),
                     path -> path.toString().endsWith(".json"))
-                    .forEach(this::loadCommands);
+                    .forEach(this::loadCommand);
         } catch (IOException e) {
             log.severe(e.getMessage());
         }
         log.info("Zincite Json module loaded");
+        log.info(totalCommands + " commands where loaded (" + failedConmmands + " failed)");
+        log.info(reusableFunctionalities.size() + " functionalities where loaded (" + failedFunctionalities + " failed)");
     }
 
-    private void loadReusableFunctionalities(Path path) {
-        log.info("Cargando funcionalidades reusables");
+    private void loadReusableFunctionality(Path path) {
         try {
             BufferedSource source = Okio.buffer(Okio.source(path));
 
@@ -86,9 +91,10 @@ public class JsonModule implements ZinciteModule {
             if (!(functionality instanceof ReusableFunctionality)) {
                 registerReusableFunctionality(functionality);
             }
-        } catch (IOException e) {
-            log.severe("Error creating independent functionalities");
+        } catch (IOException | ZinciteException e) {
+            log.severe("Error creating independent functionality from " + path.getFileName());
             log.severe(e.getMessage());
+            failedFunctionalities++;
         }
     }
 
@@ -97,7 +103,7 @@ public class JsonModule implements ZinciteModule {
         reusableFunctionalities.put(functionality.getName(), functionality);
     }
 
-    private void loadCommands(Path path) {
+    private void loadCommand(Path path) {
         try {
             BufferedSource source = Okio.buffer(Okio.source(path));
 
@@ -114,9 +120,10 @@ public class JsonModule implements ZinciteModule {
             }
 
             registerCommand(parsedCommand);
-        } catch (IOException e) {
-            log.severe("Error creating the commands");
+        } catch (IOException | ZinciteException e) {
+            log.severe("Error creating the command from " + path.getFileName());
             log.severe(e.getMessage());
+            failedConmmands++;
         }
     }
 
@@ -131,6 +138,7 @@ public class JsonModule implements ZinciteModule {
 
         // Agregar el comando al sistema
         commandManager.register(parsedCommand);
+        totalCommands++;
     }
 
     public void replaceReusableFunctionalities(JsonCommand command) {
