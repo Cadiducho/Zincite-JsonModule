@@ -79,9 +79,9 @@ public class JsonCommandTests {
                 + "   \"text\": \"Hola!\","
                 + "   \"reply_to\": \"none\""
                 + "}";
-        CommandFunctionality funcionalityText = functionalityAdapter.fromJson(jsonFunctionality);
-        assertNotNull(funcionalityText);
-        module.registerReusableFunctionality(funcionalityText);
+        CommandFunctionality functionalityText = functionalityAdapter.fromJson(jsonFunctionality);
+        assertNotNull(functionalityText);
+        module.registerReusableFunctionality(functionalityText);
 
         JsonAdapter<JsonCommand> commandAdapter = moshi.adapter(JsonCommand.class);
         String jsonCommand = ""
@@ -108,6 +108,6 @@ public class JsonCommandTests {
         assertNotNull(parsedCommand);
         module.replaceReusableFunctionalities(parsedCommand);
 
-        assertTrue(parsedCommand.getFunctionalities().contains(funcionalityText));
+        assertTrue(parsedCommand.getFunctionalities().contains(functionalityText));
     }
 }

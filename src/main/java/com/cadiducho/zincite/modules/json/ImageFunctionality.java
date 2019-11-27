@@ -18,7 +18,7 @@ import java.time.Instant;
 public class ImageFunctionality implements CommandFunctionality {
 
     /**
-     * Name of the funcionality
+     * Name of the functionality
      */
     @Getter private final String name;
 

@@ -10,6 +10,7 @@ import com.cadiducho.zincite.api.module.ZinciteModule;
 import lombok.Builder;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
+import lombok.Setter;
 
 import java.time.Instant;
 import java.util.List;

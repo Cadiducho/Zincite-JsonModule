@@ -20,7 +20,7 @@ import java.time.Instant;
 public class VoiceFunctionality implements CommandFunctionality {
 
     /**
-     * Name of the funcionality
+     * Name of the functionality
      */
     @Getter private final String name;
 

@@ -18,7 +18,7 @@ import java.time.Instant;
 public class VideoFunctionality implements CommandFunctionality {
 
     /**
-     * Name of the funcionality
+     * Name of the functionality
      */
     @Getter private final String name;
 

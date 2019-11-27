@@ -1,5 +1,6 @@
 package com.cadiducho.zincite.modules.json;
 
+import com.cadiducho.telegrambotapi.Audio;
 import com.cadiducho.zincite.ZinciteBot;
 import com.cadiducho.zincite.ZinciteException;
 import com.cadiducho.zincite.api.command.CommandManager;
@@ -36,6 +37,8 @@ public class JsonModule implements ZinciteModule {
                     .withSubtype(ImageFunctionality.class, "image")
                     .withSubtype(VideoFunctionality.class, "video")
                     .withSubtype(VoiceFunctionality.class, "voice")
+                    .withSubtype(AudioFunctionality.class, "audio")
+                    .withSubtype(VenueFunctionality.class, "venue")
                     .withSubtype(ReusableFunctionality.class, "reusable")
             )
             .build();
