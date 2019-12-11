@@ -1,7 +1,7 @@
 plugins {
     id 'java'
     id 'maven'
-    id "io.freefair.lombok" version "4.1.0"
+    id "io.freefair.lombok" version "4.1.6"
 }
 
 group 'com.cadiducho'
@@ -18,7 +18,7 @@ repositories {
 }
 
 dependencies {
-    implementation group: 'com.cadiducho', name: 'Zincite', version: '1.0'
+    implementation group: 'com.cadiducho', name: 'Zincite', version: '1.0.1'
     implementation group: 'com.vdurmont', name: 'emoji-java', version: '5.0.0'
 
     implementation 'com.squareup.moshi:moshi:1.8.0'
