@@ -1,6 +1,5 @@
 package com.cadiducho.zincite.modules.json;
 
-import com.cadiducho.telegrambotapi.Audio;
 import com.cadiducho.zincite.ZinciteBot;
 import com.cadiducho.zincite.ZinciteException;
 import com.cadiducho.zincite.api.command.CommandManager;
@@ -102,7 +101,7 @@ public class JsonModule implements ZinciteModule {
     }
 
     public void registerReusableFunctionality(CommandFunctionality functionality) {
-        log.info("Registering functionality " + functionality.getName());
+        log.info("Registering " + functionality.getClass().getSimpleName() + " "+  functionality.getName());
         reusableFunctionalities.put(functionality.getName(), functionality);
     }
 

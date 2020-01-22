@@ -26,8 +26,11 @@ public class AudioFunctionality implements CommandFunctionality {
 
     @Json(name = "reply_to") @Builder.Default private final ReplyPattern replyPattern = ReplyPattern.TO_NONE;
     @Json(name = "audio_id") private final String audioId;
+    @Json(name = "caption") private final String caption;
+    @Json(name = "performer") private final String performer;
+    @Json(name = "title") private final String title;
 
     public void execute(TelegramBot bot, Chat chat, User from, CommandContext context, Integer messageId, Message replyingTo, Instant instant) throws TelegramException {
-        bot.sendAudio(chat.getId(), audioId, null, null, null, null, null, replyTheCommandTo(replyPattern, messageId, replyingTo), null);
+        bot.sendAudio(chat.getId(), audioId, caption, null, performer, title, null, replyTheCommandTo(replyPattern, messageId, replyingTo), null);
     }
 }
