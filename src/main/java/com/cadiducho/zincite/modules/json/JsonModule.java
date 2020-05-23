@@ -6,9 +6,11 @@ import com.cadiducho.zincite.api.command.CommandManager;
 import com.cadiducho.zincite.api.module.ModuleInfo;
 import com.cadiducho.zincite.api.module.ZinciteModule;
 import com.squareup.moshi.JsonAdapter;
+import com.squareup.moshi.JsonDataException;
 import com.squareup.moshi.Moshi;
 import com.squareup.moshi.adapters.PolymorphicJsonAdapterFactory;
 import lombok.Getter;
+import lombok.Setter;
 import lombok.extern.java.Log;
 import okio.BufferedSource;
 import okio.Okio;
@@ -28,6 +30,9 @@ public class JsonModule implements ZinciteModule {
 
     public static final String MODULE_NAME = "JsonModule";
     private CommandManager commandManager;
+
+    @Setter @Getter private String funcionalitiesPath = "functionalities";
+    @Setter @Getter private String commandsPath = "commands";
 
     @Getter private static final Moshi moshi = new Moshi.Builder()
             .add(PolymorphicJsonAdapterFactory.of(CommandFunctionality.class, "type")
@@ -52,11 +57,11 @@ public class JsonModule implements ZinciteModule {
     public void onLoad() {
         this.commandManager = ZinciteBot.getInstance().getCommandManager();
 
-        File funcionalitiesFolder = new File("functionalities");
+        File funcionalitiesFolder = new File(funcionalitiesPath);
         if (!funcionalitiesFolder.exists()) {
             funcionalitiesFolder.mkdirs();
         }
-        File commandsFolder = new File("commands");
+        File commandsFolder = new File(commandsPath);
         if (!commandsFolder.exists()) {
             commandsFolder.mkdirs();
         }
@@ -79,6 +84,7 @@ public class JsonModule implements ZinciteModule {
 
     private void loadReusableFunctionality(Path path) {
         try {
+            log.info("Loading functionality from " + path.getFileName());
             BufferedSource source = Okio.buffer(Okio.source(path));
 
             JsonAdapter<CommandFunctionality> adapter = moshi.adapter(CommandFunctionality.class);
@@ -93,7 +99,7 @@ public class JsonModule implements ZinciteModule {
             if (!(functionality instanceof ReusableFunctionality)) {
                 registerReusableFunctionality(functionality);
             }
-        } catch (IOException | ZinciteException e) {
+        } catch (IOException | JsonDataException | ZinciteException e) {
             log.severe("Error creating independent functionality from " + path.getFileName());
             log.severe(e.getMessage());
             failedFunctionalities++;
@@ -122,7 +128,7 @@ public class JsonModule implements ZinciteModule {
             }
 
             registerCommand(parsedCommand);
-        } catch (IOException | ZinciteException e) {
+        } catch (IOException | JsonDataException | ZinciteException e) {
             log.severe("Error creating the command from " + path.getFileName());
             log.severe(e.getMessage());
             failedConmmands++;
