@@ -30,7 +30,7 @@ public class VenueFunctionality implements CommandFunctionality {
     @Json(name = "title") private final String title;
 
     public void execute(TelegramBot bot, Chat chat, User from, CommandContext context, Integer messageId, Message replyingTo, Instant instant) throws TelegramException {
-        bot.sendVenue(chat.getId(), latitude, longitude, title, null, null, null, null, replyTheCommandTo(replyPattern, messageId, replyingTo), null);
+        bot.sendVenue(chat.getId(), latitude, longitude, title, null, null, null, null, null, replyTheCommandTo(replyPattern, messageId, replyingTo), null);
     }
 }
 
