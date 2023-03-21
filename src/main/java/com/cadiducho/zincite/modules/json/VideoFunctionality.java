@@ -26,6 +26,6 @@ public class VideoFunctionality implements CommandFunctionality {
     @Json(name = "video_id") private final String videoId;
 
     public void execute(TelegramBot bot, Chat chat, User from, CommandContext context, Integer messageId, Message replyingTo, Instant instant) throws TelegramException {
-        bot.sendVideo(chat.getId(), videoId, null, null, null, null, null, null, null, false, replyTheCommandTo(replyPattern, messageId, replyingTo), null);
+        bot.sendVideo(chat.getId(), videoId, null, null, null, null, null, null, null, null, null, replyTheCommandTo(replyPattern, messageId, replyingTo), null);
     }
 }

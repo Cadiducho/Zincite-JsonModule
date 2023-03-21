@@ -26,6 +26,6 @@ public class ImageFunctionality implements CommandFunctionality {
     @Json(name = "image_id") private final String imageId;
 
     public void execute(TelegramBot bot, Chat chat, User from, CommandContext context, Integer messageId, Message replyingTo, Instant instant) throws TelegramException  {
-        bot.sendPhoto(chat.getId(), imageId, null, false, null, replyTheCommandTo(replyPattern, messageId, replyingTo), null);
+        bot.sendPhoto(chat.getId(), imageId, null, null, false, null, replyTheCommandTo(replyPattern, messageId, replyingTo), null);
     }
 }
